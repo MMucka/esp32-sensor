@@ -85,9 +85,23 @@ static const httpd_uri_t defaultPage = {
     .uri       = "/",
     .method    = HTTP_GET,
     .handler   = default_get_handler,
-    .user_ctx  = "<!DOCTYPE html><html><head><title>ESP32 temperature sensor</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" /><style></style></head><body><h1>Connect to Wifi</h1><form action=\"/connect\"><h2>SSID</h2><input type=\"text\" id=\"ssid\" name=\"ssid\"><br><br><h2>Password</h2><input type=\"text\" id=\"password\" name=\"password\"><br><br><input type=\"submit\" value=\"Connect\"></form></body></html>",
+    .user_ctx  = "<!DOCTYPE html><html><head><title>ESP32 sensor</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" /><style></style></head><body><h1>Connect to Wifi</h1><form action=\"/connect\"><h2>SSID</h2><input type=\"text\" id=\"ssid\" name=\"ssid\"><br><br><h2>Password</h2><input type=\"text\" id=\"password\" name=\"password\"><br><br><input type=\"submit\" value=\"Connect\"></form></body></html>",
 };
 
+
+static esp_err_t temperature_get_handler(httpd_req_t *req){
+    const char* resp_str = (const char*) req->user_ctx;
+    httpd_resp_send(req, resp_str, HTTPD_RESP_USE_STRLEN);
+
+    return ESP_OK;
+}
+
+static const httpd_uri_t temperature = {
+    .uri       = "/temp",
+    .method    = HTTP_GET,
+    .handler   = temperature_get_handler,
+    .user_ctx  = "10°C",
+};
 
 
 void http_server_start()
@@ -102,6 +116,7 @@ void http_server_start()
         ESP_LOGI(TAG, "Registering URI handlers");
         httpd_register_uri_handler(server, &defaultPage);
         httpd_register_uri_handler(server, &connect);
+        httpd_register_uri_handler(server, &temperature);
     }
 
     ESP_LOGI(TAG, "Error starting server!");
