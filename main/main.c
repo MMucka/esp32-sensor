@@ -33,6 +33,7 @@ void wifi_try_connect(){
     else{       // wifi record not set, start AP
         printf("Wifi record not set, start AP");
         wifi_start_ap(DEFAULT_SSID, DEFAULT_PASSWORD);
+        http_server_start();
     }
 }
 
