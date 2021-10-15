@@ -134,6 +134,10 @@ void wifi_start_ap(const char *ssid, const char *passwd)
     strcpy((char *)wifi_config.ap.password, passwd);
     wifi_config.ap.ssid_len = strlen(ssid);
 
+    if (strlen(passwd) == 0) {      // no password
+        wifi_config.ap.authmode = WIFI_AUTH_OPEN;
+    }
+
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());

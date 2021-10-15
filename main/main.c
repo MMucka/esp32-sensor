@@ -3,6 +3,7 @@
 #include "storage.h"
 #include "wifi-manager.h"
 #include "http-server.h"
+#include "dns-captive.h"
 
 #define DEFAULT_SSID        "ESP32-sensor"
 #define DEFAULT_PASSWORD    "esp32sensor"
@@ -40,7 +41,13 @@ void wifi_try_connect(){
 int app_main(void)
 {
     storage_init();
-    wifi_try_connect();
+
+    //wifi_try_connect();
+    wifi_start_ap(DEFAULT_SSID, DEFAULT_PASSWORD);
+    http_server_start();
+    
+    dns_captive_init();
+    
 
     return 0;
 }
