@@ -6,6 +6,7 @@
 #define ESP_AP_CHANNEL  6
 #define ESP_AP_MAX_CONN 10
 
+void wifi_init();
 void wifi_start_ap(const char* ssid, const char* passwd);
 void wifi_connect(const char* ssid, const char* passwd, void (*connected)(int));
 

@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "http-server.h": "c",
-        "wifi-manager.h": "c"
+        "wifi-manager.h": "c",
+        "storage.h": "c",
+        "dns-captive.h": "c"
     }
 }
